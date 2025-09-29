@@ -21,17 +21,17 @@ const testimonials: Testimonial[] = [
     id: "1",
     name: "Sarah Chen",
     role: "Marketing Director",
-    company: "TechFlow Solutions",
-    content: "The AI chatbot increased our lead response rate by 400%. We're now capturing leads 24/7 and our sales team can focus on closing deals instead of initial inquiries.",
+    company: "",
+    content: "The AI chatbot increased our lead reply rate by 70%. We're now capturing leads 24/7 and our sales team can focus on closing deals instead of initial inquiries.",
     rating: 5,
-    results: "400% increase in lead response rate"
+    results: "70% increase in lead response rate"
   },
   {
-    id: "2", 
+    id: "2",
     name: "Marcus Rodriguez",
     role: "CEO",
-    company: "GrowthHub Agency",
-    content: "Voice agents handle all our appointment booking now. We went from missing 30% of calls to booking 95% of qualified leads automatically. Game changer for our business.",
+    company: "",
+    content: "Voice agents handle all our appointment booking now. We went from missing 7-8 of calls to booking 95% of qualified leads automatically. Game changer for our business.",
     rating: 5,
     results: "95% appointment booking rate"
   },
@@ -39,23 +39,23 @@ const testimonials: Testimonial[] = [
     id: "3",
     name: "Jennifer Walsh",
     role: "Founder",
-    company: "EcoLiving Store", 
-    content: "The automated lead campaigns helped us scale from $50K to $200K monthly revenue in 6 months. The ROI is incredible - every dollar spent returns $8 in revenue.",
+    company: "",
+    content: "The automated lead campaigns helped us scale from $13K to $20K monthly revenue in 2 months. hardworking dudes, they are truly some badass innovators",
     rating: 5,
-    results: "4x revenue growth in 6 months"
+    results: "$8k revenue growth in 2 months"
   }
 ];
 
 const stats = [
-  { value: "500+", label: "Businesses Automated" },
-  { value: "10M+", label: "Leads Processed" },
-  { value: "300%", label: "Average ROI Increase" },
+  { value: "100+", label: "Automations Built" },
+  //{ value: "10M+", label: "Leads Processed" },
+  { value: "56%", label: "Average ROI Increase" },
   { value: "24/7", label: "System Uptime" }
 ];
 
 export default function SocialProof({ className }: SocialProofProps) {
   return (
-    <section id="testimonials" className={`py-32 px-4 ${className}`}>
+    <section id="testimonials" className={`py-316 px-4 ${className}`}>
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-20">
@@ -68,17 +68,19 @@ export default function SocialProof({ className }: SocialProofProps) {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                {stat.value}
+        <div className="flex justify-center mb-4">
+          <div className="grid grid-cols-3 gap-4 md:gap-4">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 md:mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-xs md:text-sm text-muted-foreground">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-sm text-muted-foreground">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Testimonials Grid */}
@@ -118,7 +120,7 @@ export default function SocialProof({ className }: SocialProofProps) {
                   <div>
                     <div className="font-semibold text-sm">{testimonial.name}</div>
                     <div className="text-xs text-muted-foreground">
-                      {testimonial.role}, {testimonial.company}
+                      {testimonial.company}
                     </div>
                   </div>
                 </div>
@@ -129,16 +131,7 @@ export default function SocialProof({ className }: SocialProofProps) {
 
         {/* Trust Badges */}
         <div className="mt-16 text-center">
-          <p className="text-sm text-muted-foreground mb-6">
-            Trusted by startups to enterprises
-          </p>
-          <div className="flex justify-center items-center gap-8 opacity-60">
-            {/* Placeholder for company logos */}
-            <div className="text-xs border rounded px-3 py-2">TECHFLOW</div>
-            <div className="text-xs border rounded px-3 py-2">GROWTHHUB</div>
-            <div className="text-xs border rounded px-3 py-2">ECOLIVING</div>
-            <div className="text-xs border rounded px-3 py-2">+497 MORE</div>
-          </div>
+          
         </div>
       </div>
     </section>

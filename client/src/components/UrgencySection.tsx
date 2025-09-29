@@ -1,49 +1,82 @@
-import { AlertTriangle } from "lucide-react";
+import { Clock, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { calendlyBookings } from "@/lib/calendly";
+import CalendlyModal from "@/components/CalendlyModal";
+import { useEffect, useState } from "react";
 
 interface UrgencySectionProps {
   onGetChatbot?: () => void;
 }
 
-export default function UrgencySection({ onGetChatbot }: UrgencySectionProps) {
+export default function UrgencySection({}: UrgencySectionProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, 10000); // Show modal after 10 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!isOpen) return null;
+
   return (
-    <section className="py-16 px-4 bg-destructive/10 border-t border-b border-destructive/20">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-center md:text-left">
-          {/* Warning Icon */}
-          <div className="flex-shrink-0">
-            <div className="flex items-center justify-center w-16 h-16 bg-destructive/20 rounded-full">
-              <AlertTriangle className="h-8 w-8 text-destructive animate-pulse" />
+    <>
+      {/* Backdrop */}
+      <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        {/* Modal */}
+        <div className="bg-background rounded-lg shadow-xl max-w-md w-full relative animate-in fade-in-0 zoom-in-95">
+          {/* Close Button */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
+          >
+            <X className="h-5 w-5" />
+          </button>
+
+          <div className="p-6">
+            <div className="text-center space-y-4">
+              {/* Clock Icon */}
+              <div className="flex justify-center">
+                <div className="flex items-center justify-center w-16 h-16 bg-primary/20 rounded-full">
+                  <Clock className="h-8 w-8 text-primary animate-pulse" />
+                </div>
+              </div>
+
+              {/* Promotion Message */}
+              <div>
+                <h3 className="text-xl font-bold mb-2">
+                  Limited Time Promotion
+                </h3>
+                <p className="text-muted-foreground mb-6">
+                  The limited time promotion to get free Instagram chatbot will end soon. Don't miss it out!
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={() => {
+                  console.log('Get Free Access Now urgency clicked');
+                  setIsCalendlyOpen(true);
+                  setIsOpen(false);
+                }}
+                data-testid="button-urgency-chatbot"
+              >
+                Get Free Access Now
+              </Button>
             </div>
-          </div>
-
-          {/* Warning Message */}
-          <div className="flex-1">
-            <h3 className="text-xl md:text-2xl font-bold text-destructive mb-2">
-              WARNING: Free Instagram chatbot promotion will end soon
-            </h3>
-            <p className="text-muted-foreground">
-              Grab yours before it's gone!
-            </p>
-          </div>
-
-          {/* CTA Button */}
-          <div className="flex-shrink-0">
-            <Button 
-              size="lg"
-              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
-              onClick={() => {
-                console.log('Get free chatbot urgency clicked');
-                calendlyBookings.freeChatbot();
-              }}
-              data-testid="button-urgency-chatbot"
-            >
-              Get Free Chatbot Now
-            </Button>
           </div>
         </div>
       </div>
-    </section>
+
+      <CalendlyModal
+        isOpen={isCalendlyOpen}
+        onClose={() => setIsCalendlyOpen(false)}
+        url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
+      />
+    </>
   );
 }

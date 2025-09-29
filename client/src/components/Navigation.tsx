@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { calendlyBookings } from "@/lib/calendly";
+import CalendlyModal from "@/components/CalendlyModal";
 
 interface NavigationProps {
   onBookCall?: () => void;
 }
 
-export default function Navigation({ onBookCall }: NavigationProps) {
+export default function Navigation({}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -22,7 +23,8 @@ export default function Navigation({ onBookCall }: NavigationProps) {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+    <>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -55,11 +57,11 @@ export default function Navigation({ onBookCall }: NavigationProps) {
             >
               Results
             </button>
-            <Button 
+            <Button
               size="sm"
               onClick={() => {
                 console.log('Nav book call clicked');
-                calendlyBookings.discoveryCall();
+                setIsCalendlyOpen(true);
               }}
               data-testid="nav-book-call"
             >
@@ -110,11 +112,11 @@ export default function Navigation({ onBookCall }: NavigationProps) {
                 Results
               </button>
               <div className="pt-2">
-                <Button 
+                <Button
                   className="w-full"
                   onClick={() => {
                     console.log('Mobile nav book call clicked');
-                    calendlyBookings.discoveryCall();
+                    setIsCalendlyOpen(true);
                     setIsMenuOpen(false);
                   }}
                   data-testid="mobile-nav-book-call"
@@ -127,5 +129,12 @@ export default function Navigation({ onBookCall }: NavigationProps) {
         )}
       </div>
     </nav>
+
+      <CalendlyModal
+        isOpen={isCalendlyOpen}
+        onClose={() => setIsCalendlyOpen(false)}
+        url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
+      />
+    </>
   );
 }

@@ -42,13 +42,13 @@ export default function LandingPage1() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation onBookCall={handleBookCall} />
-
+      
       <main>
         <section id="hero">
           <Hero
             onBookCall={handleBookCall}
             onWatchDemo={handleRequestDemo}
-            showVslVideo={false}
+            videoSrc="https://www.youtube.com/embed/hPnNK9pg7os"
           />
         </section>
 
@@ -95,21 +95,21 @@ export default function LandingPage1() {
             Transform your business with AI automation solutions
           </p>
           <div className="flex justify-center gap-6 text-sm text-muted-foreground">
-            <button
+            <button 
               onClick={() => console.log('Privacy policy clicked')}
               className="hover:text-foreground transition-colors"
               data-testid="link-privacy"
             >
               Privacy Policy
             </button>
-            <button
+            <button 
               onClick={() => console.log('Terms clicked')}
               className="hover:text-foreground transition-colors"
               data-testid="link-terms"
             >
               Terms of Service
             </button>
-            <button
+            <button 
               onClick={() => console.log('Contact clicked')}
               className="hover:text-foreground transition-colors"
               data-testid="link-contact"

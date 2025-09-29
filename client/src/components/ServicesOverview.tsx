@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, BotMessageSquare, Zap, Check, ArrowRight } from "lucide-react";
-import { calendlyBookings } from "@/lib/calendly";
+import ProcessModal from "@/components/ProcessModal";
+import CalendlyModal from "@/components/CalendlyModal";
+import { useState } from "react";
 
 interface Service {
   id: string;
@@ -54,44 +56,47 @@ const services: Service[] = [
   }
 ];
 
-export default function ServicesOverview({ onLearnMore, onBookDemo }: ServicesOverviewProps) {
+export default function ServicesOverview({}: ServicesOverviewProps) {
+  const [isProcessModalOpen, setIsProcessModalOpen] = useState(false);
+  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+
   return (
-    <section id="services" className="py-32 px-4">
+    <section id="services" className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Our <span className="text-primary">Services</span>
+            Get <span className="text-primary font-bold">Started</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Choose the service that best fits your needs. Start with our free options to experience the power of AI automation.
+          <p className="text-lg max-w-3xl mx-auto">
+            Start with our free options to experience the power of AI automation.
           </p>
         </div>
 
         {/* Services Grid - Inspired by the attached image layout */}
-        <div className="space-y-24">
+        <div className="space-y-16">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             const isEven = index % 2 === 0;
             
             return (
-              <div key={service.id} className={`grid lg:grid-cols-2 gap-12 items-center ${!isEven ? 'lg:grid-flow-col-dense' : ''}`}>
+              <div key={service.id} className={`grid lg:grid-cols-2 gap-5 items-center ${!isEven ? 'lg:grid-flow-col-dense' : ''}`}>
                 {/* Visual/Device Mockup Area */}
                 <div className={`relative ${!isEven ? 'lg:col-start-2' : ''}`}>
-                  <div className="relative aspect-square max-w-md mx-auto">
+                  <div className="relative aspect-square max-w-32 lg:max-w-md lg:mx-auto">
                     {/* Background gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl"></div>
-                    
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl lg:rounded-3xl"></div>
+
                     {/* Device mockup placeholder - you can replace with actual device images */}
-                    <div className="absolute inset-8 bg-card rounded-2xl border border-border flex items-center justify-center">
-                      <div className="p-8 bg-primary/10 rounded-full">
-                        <IconComponent className="h-16 w-16 text-primary" />
+                    <div className="absolute inset-2 lg:inset-8 bg-card rounded-lg lg:rounded-2xl border border-border flex items-center justify-center">
+                      <div className="p-2 lg:p-8 bg-primary/10 rounded-full">
+                        <IconComponent className="h-6 w-6 lg:h-16 lg:w-16 text-primary" />
                       </div>
                     </div>
-                    
+
                     {/* Floating elements */}
-                    <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary rounded-full opacity-60"></div>
-                    <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-primary/20 rounded-full opacity-40"></div>
+                    <div className="absolute -top-1 -right-1 lg:-top-4 lg:-right-4 w-3 h-3 lg:w-8 lg:h-8 bg-primary rounded-full opacity-60"></div>
+                    <div className="absolute -bottom-2 -left-2 lg:-bottom-6 lg:-left-6 w-4 h-4 lg:w-12 lg:h-12 bg-primary/20 rounded-full opacity-40"></div>
                   </div>
                 </div>
 
@@ -99,11 +104,11 @@ export default function ServicesOverview({ onLearnMore, onBookDemo }: ServicesOv
                 <div className={`space-y-6 ${!isEven ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
                   {/* Service Number and Icon */}
                   <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full">
-                      <IconComponent className="h-6 w-6 text-primary-foreground" />
+                    <div className="flex items-center justify-center w-8 h-8 md:w-12 md:h-12 bg-primary rounded-full">
+                      <IconComponent className="h-4 w-4 md:h-6 md:w-6 text-primary-foreground" />
                     </div>
                     <div className="text-sm text-primary font-semibold">
-                      SERVICE {String(index + 1).padStart(2, '0')}
+                      STEP {String(index + 1).padStart(2, '0')}
                     </div>
                   </div>
 
@@ -126,23 +131,23 @@ export default function ServicesOverview({ onLearnMore, onBookDemo }: ServicesOv
 
                   {/* Action Button */}
                   <div className="pt-4">
-                    <Button 
+                    <Button
                       size="lg"
                       className="text-lg px-8"
                       onClick={() => {
                         console.log(`Get started with ${service.id}`);
                         if (service.id === 'discovery-call') {
-                          calendlyBookings.discoveryCall();
+                          setIsCalendlyOpen(true);
                         } else if (service.id === 'instagram-chatbot') {
-                          calendlyBookings.freeChatbot();
+                          setIsProcessModalOpen(true);
                         } else {
-                          calendlyBookings.consultation();
+                          setIsProcessModalOpen(true);
                         }
                       }}
                       data-testid={`button-get-${service.id}`}
                     >
-                      {service.id === 'discovery-call' ? 'Book Free Call' : 
-                       service.id === 'instagram-chatbot' ? 'Get Free Chatbot' : 
+                      {service.id === 'discovery-call' ? 'Book Free Call' :
+                       service.id === 'instagram-chatbot' ? 'Get Free Chatbot' :
                        'Get Started'}
                       <ArrowRight className="h-5 w-5 ml-2" />
                     </Button>
@@ -155,22 +160,33 @@ export default function ServicesOverview({ onLearnMore, onBookDemo }: ServicesOv
 
         {/* Bottom CTA */}
         <div className="text-center mt-20">
-          <p className="text-muted-foreground mb-6">
+          <p className="mb-4">
             Ready to transform your business with AI automation?
           </p>
-          <Button 
-            size="lg" 
-            variant="outline" 
+          <Button
+            size="lg"
             className="text-lg px-8"
             onClick={() => {
               console.log('Schedule consultation clicked');
-              calendlyBookings.discoveryCall();
+              setIsCalendlyOpen(true);
             }}
             data-testid="button-consultation"
           >
             Schedule Free Discovery Call
           </Button>
         </div>
+
+        <ProcessModal
+          isOpen={isProcessModalOpen}
+          onClose={() => setIsProcessModalOpen(false)}
+          calendlyUrl="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
+        />
+
+        <CalendlyModal
+          isOpen={isCalendlyOpen}
+          onClose={() => setIsCalendlyOpen(false)}
+          url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
+        />
       </div>
     </section>
   );

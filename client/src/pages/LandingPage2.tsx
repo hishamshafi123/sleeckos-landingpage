@@ -8,7 +8,7 @@ import SocialProof from "@/components/SocialProof";
 import ProcessSection from "@/components/ProcessSection";
 import FinalCTA from "@/components/FinalCTA";
 
-export default function LandingPage1() {
+export default function LandingPage2() {
   // Set dark mode by default for the landing page
   useEffect(() => {
     document.documentElement.classList.add('dark');
@@ -48,7 +48,7 @@ export default function LandingPage1() {
           <Hero
             onBookCall={handleBookCall}
             onWatchDemo={handleRequestDemo}
-            showVslVideo={false}
+            videoSrc="https://www.youtube.com/embed/HZ-1L116bj4"
           />
         </section>
 
