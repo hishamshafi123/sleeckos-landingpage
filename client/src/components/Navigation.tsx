@@ -10,6 +10,7 @@ interface NavigationProps {
 export default function Navigation({}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -29,9 +30,20 @@ export default function Navigation({}: NavigationProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="text-xl font-bold">
-              Sleeck<span className="text-primary">OS</span>
-            </div>
+            {logoError ? (
+              <div className="text-xl font-bold">
+                Sleeck<span className="text-primary">OS</span>
+              </div>
+            ) : (
+              <img
+                src="/logo.png"
+                alt="SleeckOS"
+                className="h-8 w-auto select-none"
+                onError={() => setLogoError(true)}
+                loading="eager"
+                decoding="async"
+              />
+            )}
           </div>
 
           {/* Desktop Navigation */}

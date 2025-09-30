@@ -87,9 +87,7 @@ export default function LandingPage1() {
       <footer className="border-t border-border py-8 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="text-xl font-bold">
-              Sleeck<span className="text-primary">OS</span>
-            </div>
+            <img src="/logo.png" alt="SleeckOS" className="h-8 w-auto select-none" loading="eager" decoding="async" />
           </div>
           <p className="text-sm text-muted-foreground mb-4">
             Transform your business with AI automation solutions
