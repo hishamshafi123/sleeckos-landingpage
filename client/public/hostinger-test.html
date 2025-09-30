@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hostinger Test</title>
+    <style>
+        body { 
+            font-family: system-ui; 
+            padding: 40px; 
+            background: #0A0A0A; 
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .success { color: #00ff00; }
+        .error { color: #ff0000; }
+        .test { 
+            border: 1px solid #333; 
+            padding: 20px; 
+            margin: 20px 0; 
+            border-radius: 8px;
+        }
+    </style>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+</head>
+<body>
+    <h1>Hostinger Static Hosting Test</h1>
+    
+    <div class="test">
+        <h2>✓ HTML is loading</h2>
+        <p>If you can see this, basic HTML works.</p>
+    </div>
+    
+    <div class="test">
+        <h2 id="js-test" class="error">✗ JavaScript not loaded</h2>
+        <p id="js-msg">Testing...</p>
+    </div>
+    
+    <div class="test">
+        <h2 id="css-test">CSS Test</h2>
+        <p>The background should be dark (#0A0A0A)</p>
+    </div>
+    
+    <div class="test">
+        <h2>Next Steps:</h2>
+        <ol>
+            <li>If all tests pass, your static hosting works</li>
+            <li>Try accessing: <code>assets/index-[hash].js</code></li>
+            <li>Check browser console (F12) for errors</li>
+            <li>Verify .htaccess is uploaded</li>
+        </ol>
+    </div>
+    
+    <script>
+        document.getElementById('js-test').className = 'success';
+        document.getElementById('js-test').textContent = '✓ JavaScript is working';
+        document.getElementById('js-msg').textContent = 'JavaScript executed successfully!';
+        
+        // Test if we can access the root
+        console.log('Current URL:', window.location.href);
+        console.log('Test successful!');
+    </script>
+</body>
+</html>
+

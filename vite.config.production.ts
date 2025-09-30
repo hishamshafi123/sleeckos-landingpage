@@ -4,6 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  base: "./", // Use relative paths for better static hosting compatibility
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -12,6 +13,7 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
+  publicDir: path.resolve(import.meta.dirname, "client", "public"),
   build: {
     outDir: path.resolve(import.meta.dirname, "hostinger"),
     emptyOutDir: true,
@@ -26,7 +28,7 @@ export default defineConfig({
         },
       },
     },
-    sourcemap: false,
+    sourcemap: true,
     chunkSizeWarningLimit: 1000,
   },
 });

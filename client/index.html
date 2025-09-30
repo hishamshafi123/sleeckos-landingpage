@@ -9,7 +9,7 @@
     <!-- Performance optimizations -->
     <meta name="robots" content="index, follow">
     <meta name="author" content="SleeckOS">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="theme-color" content="#000000">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,21 +38,41 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Fallback error message if React fails to load -->
+    <script>
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        if (!root || root.innerHTML.trim() === '') {
+          document.body.innerHTML = '<div style="padding: 40px; font-family: system-ui; max-width: 600px; margin: 0 auto;">' +
+            '<h1 style="color: #ef4444;">App Loading Error</h1>' +
+            '<p>The application failed to load. Please try:</p>' +
+            '<ul>' +
+            '<li>Refreshing the page (Ctrl+F5)</li>' +
+            '<li>Clearing your browser cache</li>' +
+            '<li>Opening in a different browser</li>' +
+            '</ul>' +
+            '<p style="color: #666; font-size: 14px;">Error: React app did not mount within 3 seconds</p>' +
+            '</div>';
+        }
+      }, 3000);
+    </script>
+
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Calendly link widget begin -->
+
+    <!-- Calendly scripts AFTER React loads -->
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <!-- Calendly link widget end -->
-    <!-- Calendly badge widget begin -->
     <script type="text/javascript">
       window.onload = function() {
-        Calendly.initBadgeWidget({
-          url: 'https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=00ffff',
-          text: 'Get Free Access Now',
-          color: '#00ffff',
-          textColor: '#000000'
-        });
+        if (window.Calendly) {
+          Calendly.initBadgeWidget({
+            url: 'https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses?hide_gdpr_banner=1&background_color=000000&text_color=ffffff&primary_color=00ffff',
+            text: 'Get Free Access Now',
+            color: '#00ffff',
+            textColor: '#000000'
+          });
+        }
       }
     </script>
-    <!-- Calendly badge widget end -->
   </body>
 </html>
