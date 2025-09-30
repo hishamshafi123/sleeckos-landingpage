@@ -28,14 +28,7 @@ const CALENDLY_URLS = {
   strategy_call: 'https://calendly.com/d/cw4r-kvc-nmk'
 };
 
-// Declare Calendly global for TypeScript
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget: (options: { url: string; [key: string]: any }) => void;
-    };
-  }
-}
+// Calendly types are now in types/calendly.d.ts
 
 /**
  * Opens Calendly using the official widget popup

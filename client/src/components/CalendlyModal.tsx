@@ -1,16 +1,7 @@
 import { X } from "lucide-react";
 import { useEffect, useRef } from "react";
 
-// Extend window for Calendly widget
-declare global {
-  interface Window {
-    Calendly?: {
-      initPopupWidget?: (options: { url: string; [key: string]: any }) => void;
-      initInlineWidget?: (options: { url: string; parentElement: HTMLElement }) => void;
-      initBadgeWidget?: (options: { url: string; text?: string; color?: string; textColor?: string; [key: string]: any }) => void;
-    };
-  }
-}
+// Calendly types are already declared in lib/calendly.ts
 
 interface CalendlyModalProps {
   isOpen: boolean;

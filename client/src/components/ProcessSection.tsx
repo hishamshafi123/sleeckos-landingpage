@@ -29,7 +29,11 @@ const steps: ProcessStep[] = [
   }
 ];
 
-export default function ProcessSection() {
+interface ProcessSectionProps {
+  onGetStarted?: () => void;
+}
+
+export default function ProcessSection({ onGetStarted }: ProcessSectionProps) {
   return (
     <section id="process" className="py-6 px-2">
       <div className="max-w-4xl mx-auto">

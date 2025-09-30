@@ -3,22 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    react(),
-    // Only include development plugins in development
-    ...(process.env.NODE_ENV !== "production"
-      ? [
-          (await import("@replit/vite-plugin-runtime-error-modal")).default(),
-          ...(process.env.REPL_ID !== undefined
-            ? [
-                await import("@replit/vite-plugin-cartographer").then((m) =>
-                  m.cartographer(),
-                ),
-              ]
-            : []),
-        ]
-      : []),
-  ],
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -28,7 +13,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: path.resolve(import.meta.dirname, "hostinger"),
     emptyOutDir: true,
     // Production optimizations
     minify: "esbuild",
@@ -41,15 +26,7 @@ export default defineConfig({
         },
       },
     },
-    // Enable source maps for better debugging in production
     sourcemap: false,
-    // Optimize chunk size
     chunkSizeWarningLimit: 1000,
-  },
-  server: {
-    fs: {
-      strict: true,
-      deny: ["**/.*"],
-    },
   },
 });
