@@ -1,7 +1,6 @@
 import { Clock, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CalendlyModal from "@/components/CalendlyModal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface UrgencySectionProps {
   onGetChatbot?: () => void;
@@ -9,15 +8,24 @@ interface UrgencySectionProps {
 
 export default function UrgencySection({}: UrgencySectionProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 10000); // Show modal after 10 seconds
+  const scrollToForm = () => {
+    const formElement = document.getElementById('lead-form');
+    if (formElement) {
+      formElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
 
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setIsOpen(true);
+  //   }, 10000); // Show modal after 10 seconds
+
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   if (!isOpen) return null;
 
@@ -60,7 +68,7 @@ export default function UrgencySection({}: UrgencySectionProps) {
                 className="w-full"
                 onClick={() => {
                   console.log('Get Free Access Now urgency clicked');
-                  setIsCalendlyOpen(true);
+                  scrollToForm();
                   setIsOpen(false);
                 }}
                 data-testid="button-urgency-chatbot"
@@ -71,12 +79,6 @@ export default function UrgencySection({}: UrgencySectionProps) {
           </div>
         </div>
       </div>
-
-      <CalendlyModal
-        isOpen={isCalendlyOpen}
-        onClose={() => setIsCalendlyOpen(false)}
-        url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-      />
     </>
   );
 }

@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Shield, TrendingUp } from "lucide-react";
-import CalendlyModal, { CalendlyInlineWidget } from "@/components/CalendlyModal";
-import { useState } from "react";
 
 interface FinalCTAProps {
   onBookCall?: () => void;
@@ -10,7 +8,15 @@ interface FinalCTAProps {
 }
 
 export default function FinalCTA({}: FinalCTAProps) {
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  const scrollToForm = () => {
+    const formElement = document.getElementById('lead-form');
+    if (formElement) {
+      formElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
 
   return (
     <section className="py-16 px-4">
@@ -78,7 +84,7 @@ export default function FinalCTA({}: FinalCTAProps) {
                 className="text-lg px-10 py-4"
                 onClick={() => {
                   console.log('Book free call clicked');
-                  setIsCalendlyOpen(true);
+                  scrollToForm();
                 }}
                 data-testid="button-book-free-call"
               >
@@ -90,7 +96,7 @@ export default function FinalCTA({}: FinalCTAProps) {
                 className="text-lg px-10 py-4"
                 onClick={() => {
                   console.log('See live demo clicked');
-                  setIsCalendlyOpen(true);
+                  scrollToForm();
                 }}
                 data-testid="button-see-demo"
               >
@@ -127,12 +133,6 @@ export default function FinalCTA({}: FinalCTAProps) {
         </Card>
 
       </div>
-
-      <CalendlyModal
-        isOpen={isCalendlyOpen}
-        onClose={() => setIsCalendlyOpen(false)}
-        url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-      />
     </section>
   );
 }

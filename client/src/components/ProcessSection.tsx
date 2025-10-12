@@ -34,8 +34,11 @@ interface ProcessSectionProps {
 }
 
 export default function ProcessSection({ onGetStarted }: ProcessSectionProps) {
+  // Temporarily hidden
+  return null;
+
   return (
-    <section id="process" className="py-6 px-2">
+    <section id="process" className="py-40 px-2">
       <div className="max-w-4xl mx-auto">
         {/* Single Card with Steps */}
         <Card className="p-8">

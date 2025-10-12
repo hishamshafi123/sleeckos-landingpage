@@ -41,6 +41,9 @@ const steps: ProcessStep[] = [
 export default function ProcessModal({ isOpen, onClose, calendlyUrl = "https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses" }: ProcessModalProps) {
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
 
+  // Temporarily hidden
+  return null;
+
   if (!isOpen) return null;
 
   return (

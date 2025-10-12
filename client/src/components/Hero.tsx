@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import ProcessModal from "@/components/ProcessModal";
-import CalendlyModal from "@/components/CalendlyModal";
-import { useState } from "react";
 
 interface HeroProps {
   onBookCall?: () => void;
@@ -10,9 +7,16 @@ interface HeroProps {
   videoSrc?: string;
 }
 
-export default function Hero({ showVslVideo = true, videoSrc }: HeroProps) {
-  const [isProcessModalOpen, setIsProcessModalOpen] = useState(false);
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+export default function Hero({ onBookCall, onWatchDemo, showVslVideo = true, videoSrc }: HeroProps) {
+  const scrollToForm = () => {
+    const formElement = document.getElementById('lead-form');
+    if (formElement) {
+      formElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center py-20 px-4">
@@ -50,7 +54,7 @@ export default function Hero({ showVslVideo = true, videoSrc }: HeroProps) {
             className="text-lg px-8 py-4"
             onClick={() => {
               console.log('Get free Instagram chatbot clicked');
-              setIsProcessModalOpen(true);
+              scrollToForm();
             }}
             data-testid="button-free-instagram-chatbot"
           >
@@ -62,7 +66,7 @@ export default function Hero({ showVslVideo = true, videoSrc }: HeroProps) {
             className="text-lg px-8 py-4"
             onClick={() => {
               console.log('Request demo clicked');
-              setIsCalendlyOpen(true);
+              scrollToForm();
             }}
             data-testid="button-request-demo"
           >
@@ -82,18 +86,6 @@ export default function Hero({ showVslVideo = true, videoSrc }: HeroProps) {
           </div>
         </div>
       </div>
-
-      <ProcessModal
-        isOpen={isProcessModalOpen}
-        onClose={() => setIsProcessModalOpen(false)}
-        calendlyUrl="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-      />
-
-      <CalendlyModal
-        isOpen={isCalendlyOpen}
-        onClose={() => setIsCalendlyOpen(false)}
-        url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-      />
     </section>
   );
 }

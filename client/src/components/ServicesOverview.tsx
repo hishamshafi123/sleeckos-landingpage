@@ -1,9 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, BotMessageSquare, Zap, Check, ArrowRight } from "lucide-react";
-import ProcessModal from "@/components/ProcessModal";
-import CalendlyModal from "@/components/CalendlyModal";
-import { useState } from "react";
 
 interface Service {
   id: string;
@@ -57,8 +54,15 @@ const services: Service[] = [
 ];
 
 export default function ServicesOverview({}: ServicesOverviewProps) {
-  const [isProcessModalOpen, setIsProcessModalOpen] = useState(false);
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  const scrollToForm = () => {
+    const formElement = document.getElementById('lead-form');
+    if (formElement) {
+      formElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  };
 
   return (
     <section id="services" className="py-16 px-4">
@@ -73,87 +77,64 @@ export default function ServicesOverview({}: ServicesOverviewProps) {
           </p>
         </div>
 
-        {/* Services Grid - Inspired by the attached image layout */}
-        <div className="space-y-16">
+        {/* Services Grid - Each step in a card/box */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
             const IconComponent = service.icon;
-            const isEven = index % 2 === 0;
-            
+
             return (
-              <div key={service.id} className={`grid lg:grid-cols-2 gap-5 items-center ${!isEven ? 'lg:grid-flow-col-dense' : ''}`}>
-                {/* Visual/Device Mockup Area */}
-                <div className={`relative ${!isEven ? 'lg:col-start-2' : ''}`}>
-                  <div className="relative aspect-square max-w-32 lg:max-w-md lg:mx-auto">
-                    {/* Background gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-xl lg:rounded-3xl"></div>
-
-                    {/* Device mockup placeholder - you can replace with actual device images */}
-                    <div className="absolute inset-2 lg:inset-8 bg-card rounded-lg lg:rounded-2xl border border-border flex items-center justify-center">
-                      <div className="p-2 lg:p-8 bg-primary/10 rounded-full">
-                        <IconComponent className="h-6 w-6 lg:h-16 lg:w-16 text-primary" />
-                      </div>
-                    </div>
-
-                    {/* Floating elements */}
-                    <div className="absolute -top-1 -right-1 lg:-top-4 lg:-right-4 w-3 h-3 lg:w-8 lg:h-8 bg-primary rounded-full opacity-60"></div>
-                    <div className="absolute -bottom-2 -left-2 lg:-bottom-6 lg:-left-6 w-4 h-4 lg:w-12 lg:h-12 bg-primary/20 rounded-full opacity-40"></div>
-                  </div>
+              <Card key={service.id} className="relative overflow-hidden hover:shadow-xl transition-shadow">
+                {/* Step Number Badge */}
+                <div className="absolute top-4 right-4 bg-primary text-primary-foreground rounded-full w-10 h-10 flex items-center justify-center text-sm font-bold">
+                  {index + 1}
                 </div>
 
-                {/* Content Area */}
-                <div className={`space-y-6 ${!isEven ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-                  {/* Service Number and Icon */}
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center justify-center w-8 h-8 md:w-12 md:h-12 bg-primary rounded-full">
-                      <IconComponent className="h-4 w-4 md:h-6 md:w-6 text-primary-foreground" />
-                    </div>
-                    <div className="text-sm text-primary font-semibold">
-                      STEP {String(index + 1).padStart(2, '0')}
-                    </div>
+                <CardHeader className="pb-4">
+                  {/* Icon */}
+                  <div className="mb-4 p-4 bg-primary/10 rounded-lg inline-flex w-fit">
+                    <IconComponent className="h-8 w-8 text-primary" />
+                  </div>
+
+                  {/* Step Label */}
+                  <div className="text-sm text-primary font-semibold mb-2">
+                    STEP {String(index + 1).padStart(2, '0')}
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl md:text-3xl font-bold leading-tight">
+                  <CardTitle className="text-xl font-bold leading-tight">
                     {service.title}
-                  </h3>
+                  </CardTitle>
+                </CardHeader>
 
+                <CardContent className="space-y-6">
                   {/* Benefits List */}
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     {service.benefits.map((benefit, idx) => (
-                      <div key={idx} className="flex items-start gap-3">
+                      <div key={idx} className="flex items-start gap-2">
                         <div className="flex-shrink-0 w-5 h-5 bg-primary rounded-full flex items-center justify-center mt-0.5">
                           <Check className="h-3 w-3 text-primary-foreground" />
                         </div>
-                        <span className="text-muted-foreground">{benefit}</span>
+                        <span className="text-sm text-muted-foreground">{benefit}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Action Button */}
-                  <div className="pt-4">
-                    <Button
-                      size="lg"
-                      className="text-lg px-8"
-                      onClick={() => {
-                        console.log(`Get started with ${service.id}`);
-                        if (service.id === 'discovery-call') {
-                          setIsCalendlyOpen(true);
-                        } else if (service.id === 'instagram-chatbot') {
-                          setIsProcessModalOpen(true);
-                        } else {
-                          setIsProcessModalOpen(true);
-                        }
-                      }}
-                      data-testid={`button-get-${service.id}`}
-                    >
-                      {service.id === 'discovery-call' ? 'Book Free Call' :
-                       service.id === 'instagram-chatbot' ? 'Get Free Chatbot' :
-                       'Get Started'}
-                      <ArrowRight className="h-5 w-5 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+                  <Button
+                    className="w-full"
+                    onClick={() => {
+                      console.log(`Get started with ${service.id}`);
+                      scrollToForm();
+                    }}
+                    data-testid={`button-get-${service.id}`}
+                  >
+                    {service.id === 'discovery-call' ? 'Book Free Call' :
+                     service.id === 'instagram-chatbot' ? 'Get Free Chatbot' :
+                     'Get Started'}
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
@@ -168,25 +149,13 @@ export default function ServicesOverview({}: ServicesOverviewProps) {
             className="text-lg px-8"
             onClick={() => {
               console.log('Schedule consultation clicked');
-              setIsCalendlyOpen(true);
+              scrollToForm();
             }}
             data-testid="button-consultation"
           >
             Schedule Free Discovery Call
           </Button>
         </div>
-
-        <ProcessModal
-          isOpen={isProcessModalOpen}
-          onClose={() => setIsProcessModalOpen(false)}
-          calendlyUrl="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-        />
-
-        <CalendlyModal
-          isOpen={isCalendlyOpen}
-          onClose={() => setIsCalendlyOpen(false)}
-          url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-        />
       </div>
     </section>
   );

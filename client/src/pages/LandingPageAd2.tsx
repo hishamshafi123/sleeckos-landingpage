@@ -9,35 +9,31 @@ import ProcessSection from "@/components/ProcessSection";
 import FinalCTA from "@/components/FinalCTA";
 import LeadCaptureForm from "@/components/LeadCaptureForm";
 
-export default function LandingPage1() {
+export default function LandingPageAd2() {
   // Set dark mode by default for the landing page
   useEffect(() => {
     document.documentElement.classList.add('dark');
   }, []);
 
-  const handleBookCall = () => {
-    // todo: remove mock functionality - integrate with actual booking system
-    console.log('Booking call - would redirect to scheduling system');
-    // Placeholder for actual booking integration
-    alert('Booking system would open here - scheduling a consultation call');
+  const scrollToForm = () => {
+    const formElement = document.getElementById('lead-form');
+    if (formElement) {
+      formElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
   };
 
-  const handleRequestDemo = () => {
-    // todo: remove mock functionality - integrate with demo system
-    console.log('Requesting demo - would show demo or scheduling');
-    alert('Demo system would open here - either live demo or demo scheduling');
-  };
-
+  const handleBookCall = scrollToForm;
+  const handleRequestDemo = scrollToForm;
   const handleLearnMore = (serviceId: string) => {
-    // todo: remove mock functionality - navigate to service detail page
     console.log(`Learning more about ${serviceId}`);
-    alert(`Would navigate to detailed ${serviceId} information page`);
+    scrollToForm();
   };
-
   const handleBookDemo = (serviceId: string) => {
-    // todo: remove mock functionality - integrate with service-specific booking
     console.log(`Booking demo for ${serviceId}`);
-    alert(`Would open booking system for ${serviceId} demo`);
+    scrollToForm();
   };
 
   return (
@@ -49,9 +45,17 @@ export default function LandingPage1() {
           <Hero
             onBookCall={handleBookCall}
             onWatchDemo={handleRequestDemo}
-            showVslVideo={false}
+            videoSrc="https://www.youtube.com/embed/YOUR_AD_VIDEO_ID_2"
           />
         </section>
+
+        {/* Lead Capture Form - Right after VSL */}
+        <LeadCaptureForm
+          webhookUrl="https://webhook.site/sample-webhook-url"
+          heading="Get Your <span class='text-primary'>Free</span> Ad Video"
+          subheading="Fill in your details below and we'll create a professional ad video for you"
+          buttonText="Get Free Ad Video"
+        />
 
         <section id="process">
           <ProcessSection />
@@ -82,9 +86,6 @@ export default function LandingPage1() {
             onRequestDemo={handleRequestDemo}
           />
         </section>
-
-        {/* Lead Capture Form */}
-        <LeadCaptureForm webhookUrl="https://webhook.site/sample-webhook-url" />
       </main>
 
       {/* Footer */}

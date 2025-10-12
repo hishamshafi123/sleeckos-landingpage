@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import CalendlyModal from "@/components/CalendlyModal";
 
 interface NavigationProps {
   onBookCall?: () => void;
@@ -9,7 +8,6 @@ interface NavigationProps {
 
 export default function Navigation({}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
@@ -17,7 +15,7 @@ export default function Navigation({}: NavigationProps) {
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: 'start'
+        block: sectionId === 'lead-form' ? 'center' : 'start'
       });
     }
     setIsMenuOpen(false);
@@ -73,7 +71,7 @@ export default function Navigation({}: NavigationProps) {
               size="sm"
               onClick={() => {
                 console.log('Nav book call clicked');
-                setIsCalendlyOpen(true);
+                scrollToSection('lead-form');
               }}
               data-testid="nav-book-call"
             >
@@ -128,8 +126,7 @@ export default function Navigation({}: NavigationProps) {
                   className="w-full"
                   onClick={() => {
                     console.log('Mobile nav book call clicked');
-                    setIsCalendlyOpen(true);
-                    setIsMenuOpen(false);
+                    scrollToSection('lead-form');
                   }}
                   data-testid="mobile-nav-book-call"
                 >
@@ -141,12 +138,6 @@ export default function Navigation({}: NavigationProps) {
         )}
       </div>
     </nav>
-
-      <CalendlyModal
-        isOpen={isCalendlyOpen}
-        onClose={() => setIsCalendlyOpen(false)}
-        url="https://calendly.com/hishamshafiofficial/ai-insider-knowledge-for-businesses"
-      />
     </>
   );
 }
