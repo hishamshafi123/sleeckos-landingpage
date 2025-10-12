@@ -53,11 +53,37 @@ export default function LeadCaptureForm({
       return;
     }
 
+    // Webhook URL validation
+    if (!webhookUrl || webhookUrl.trim() === "") {
+      console.error("Webhook URL is not configured");
+      toast({
+        title: "Configuration Error",
+        description: "Form is not properly configured. Please contact support.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate webhook URL format
+    try {
+      new URL(webhookUrl);
+    } catch (urlError) {
+      console.error("Invalid webhook URL:", webhookUrl, urlError);
+      toast({
+        title: "Configuration Error",
+        description: "Form is not properly configured. Please contact support.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
       // Try direct fetch first, fallback to server proxy if CORS fails
       let response;
+      let usedProxy = false;
+
       try {
         // Send data directly to webhook
         response = await fetch(webhookUrl, {
@@ -73,9 +99,16 @@ export default function LeadCaptureForm({
             source: source || "landing_page_form"
           }),
         });
+
+        // Check if response is ok
+        if (!response.ok) {
+          throw new Error(`Direct webhook failed with status: ${response.status}`);
+        }
       } catch (directFetchError) {
-        log('Direct fetch failed, trying proxy...');
-        // Fallback to server proxy if direct fetch fails (CORS)
+        console.log('Direct fetch failed, trying proxy...', directFetchError);
+        usedProxy = true;
+
+        // Fallback to server proxy if direct fetch fails (CORS or network error)
         response = await fetch("/api/proxy-webhook", {
           method: "POST",
           headers: {
@@ -92,7 +125,7 @@ export default function LeadCaptureForm({
         });
       }
 
-      if (response.ok) {
+      if (response && response.ok) {
         setIsSuccess(true);
         toast({
           title: "Success!",
@@ -105,13 +138,20 @@ export default function LeadCaptureForm({
           setIsSuccess(false);
         }, 3000);
       } else {
-        throw new Error("Failed to submit");
+        const errorText = await response?.text().catch(() => "Unknown error");
+        console.error("Webhook submission failed:", {
+          status: response?.status,
+          statusText: response?.statusText,
+          errorText,
+          usedProxy
+        });
+        throw new Error(`Webhook submission failed: ${response?.status || "No response"}`);
       }
     } catch (error) {
       console.error("Form submission error:", error);
       toast({
         title: "Submission Error",
-        description: "There was an error submitting your information. Please try again.",
+        description: "There was an error submitting your information. Please try again or contact us directly.",
         variant: "destructive"
       });
     } finally {
