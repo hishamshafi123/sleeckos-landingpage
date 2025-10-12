@@ -50,7 +50,7 @@ export default function LandingPage2() {
         </section>
 
         {/* Lead Capture Form - Right after VSL */}
-        <LeadCaptureForm webhookUrl="https://webhook.site/sample-webhook-url" />
+        <LeadCaptureForm webhookUrl="https://n8n.marketingagentc.com/webhook/1956b02f-eb16-45b8-a58a-8cbfc2648aec" />
 
         <section id="process">
           <ProcessSection />

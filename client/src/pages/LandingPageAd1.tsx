@@ -51,7 +51,7 @@ export default function LandingPageAd1() {
 
         {/* Lead Capture Form - Right after VSL */}
         <LeadCaptureForm
-          webhookUrl="https://webhook.site/sample-webhook-url"
+          webhookUrl="https://n8n.marketingagentc.com/webhook/1956b02f-eb16-45b8-a58a-8cbfc2648aec"
           heading="Get Your <span class='text-primary'>Free</span> Ad Video"
           subheading="Fill in your details below and we'll create a professional ad video for you"
           buttonText="Get Free Ad Video"
