@@ -53,7 +53,10 @@ export default function LandingPage1() {
         </section>
 
         {/* Lead Capture Form - Right after VSL */}
-        <LeadCaptureForm webhookUrl="https://n8n.marketingagentc.com/webhook/1956b02f-eb16-45b8-a58a-8cbfc2648aec" />
+        <LeadCaptureForm
+          webhookUrl="https://n8n.marketingagentc.com/webhook/1956b02f-eb16-45b8-a58a-8cbfc2648aec"
+          source="chatbot"
+        />
 
         <section id="process">
           <ProcessSection />
